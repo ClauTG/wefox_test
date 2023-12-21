@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "jest-joi": "^1.1.17",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "joi": "^17.11.0"
+  }
+}

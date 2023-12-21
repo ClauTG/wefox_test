@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "jest"
+},
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
