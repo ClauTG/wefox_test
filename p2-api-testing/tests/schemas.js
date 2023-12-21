@@ -18,6 +18,19 @@ const findPetByStatuSchema = Joi.array().items({
     status: Joi.string().valid("available", "pending", "sold"),
   });
 
+  const newPetSchema = Joi.object().keys({
+    id: Joi.number().integer(),
+    name: Joi.string().required(),
+    category: category,
+    photoUrls: photoUrls.required(),
+    tags: Joi.array().items({
+      id: Joi.number().integer(),
+      name: Joi.string(),
+    }),
+    status: Joi.string().valid("available", "pending", "sold"),
+  });
+    
 module.exports = {
-    '/pet/findByStatus': findPetByStatuSchema
+    '/pet/findByStatus': findPetByStatuSchema,
+    '/pet/newPet': newPetSchema
 };
