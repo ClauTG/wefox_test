@@ -47,5 +47,19 @@ describe("Find Pets by status", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toMatchSchema(Schemas["/pet/newPet"]);
-  });
+});
+
+it("Test update an existing pet", async () => {
+    const petId = 3
+    const petStatus = 'sold'
+    const response = await request(baseURL).put("/pet").send({
+        id: petId,
+        status: petStatus
+    }).set("Content-Type", "application/json")
+    .set("Accept", "application/json");
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toMatchSchema(Schemas["/pet/updatePet"]);
+    expect(response.body.id).toBe(petId)
+    expect(response.body.status).toEqual(petStatus)
+  })
 });
