@@ -1,7 +1,8 @@
 const request = require("supertest");
 const jestJoi = require("jest-joi");
 const Schemas = require("./schemas");
-var Chance = require("chance")
+
+var Chance = require("chance");
 
 const baseURL = "http://localhost:8080/api/v3";
 
@@ -21,23 +22,23 @@ describe("Find Pets by status", () => {
     var chance = new Chance();
 
     const payload = {
-      id: chance.integer({min: 20, max: 1000}),
+      id: chance.integer({ min: 20, max: 1000 }),
       name: chance.first(),
       category: {
         id: 1,
-        name: "Cats"
+        name: "Cats",
       },
       photoUrls: [
-        "https://cdn.pixabay.com/photo/2017/05/29/15/34/kitten-2354016_960_720.jpg"
+        "https://cdn.pixabay.com/photo/2017/05/29/15/34/kitten-2354016_960_720.jpg",
       ],
       tags: [
         {
           id: 1,
-          name: "kitty"
-        }
+          name: "kitty",
+        },
       ],
-      status: "pending"
-    }
+      status: "pending",
+    };
 
     const response = await request(baseURL)
       .post("/pet")
@@ -47,19 +48,32 @@ describe("Find Pets by status", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toMatchSchema(Schemas["/pet/newPet"]);
-});
+  });
 
-it("Test update an existing pet", async () => {
-    const petId = 3
-    const petStatus = 'sold'
-    const response = await request(baseURL).put("/pet").send({
+  it("Test update an existing pet", async () => {
+    const petId = 3;
+    const petStatus = "sold";
+    const response = await request(baseURL)
+      .put("/pet")
+      .send({
         id: petId,
-        status: petStatus
-    }).set("Content-Type", "application/json")
-    .set("Accept", "application/json");
+        status: petStatus,
+      })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
     expect(response.statusCode).toBe(200);
     expect(response.body).toMatchSchema(Schemas["/pet/updatePet"]);
-    expect(response.body.id).toBe(petId)
-    expect(response.body.status).toEqual(petStatus)
-  })
+    expect(response.body.id).toBe(petId);
+    expect(response.body.status).toEqual(petStatus);
+  });
+
+  it.only("Test deletes a pet", async () => {
+    const petId = 2;
+    const response = await request(baseURL)
+      .delete(`/pet/${petId}`)
+      .set("Accept", "application/xml");
+
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toEqual("Pet deleted");
+  });
 });
