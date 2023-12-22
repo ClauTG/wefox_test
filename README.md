@@ -32,7 +32,7 @@ Now when you run `npm test` on your terminal, you will get a successfully execut
 It is well know, the integration and API testing is a fundamental part of any Test Automation Strategy. The API testing technique produces fast and great output. API testing helps to validate the business logic to a great extent. The framework choosen for test automation reflects my latest experience, but in real world open discussions about the daily challenges faced are necessary to select the technology stack to helps us solve our customer’s problems with a higgh quality software product.
 
 I would like to include this image that reflects the position of API testing suite in the pipeline
-![pipeline structure](/wefox_test/images/pipeline.png)
+![pipeline structure](/images/pipeline.png)
 
 source: [New Challenges in Continuous Delivery](https://medium.com/test-automation-university/new-challenges-in-continuous-delivery-7bf7893fa370)
 
