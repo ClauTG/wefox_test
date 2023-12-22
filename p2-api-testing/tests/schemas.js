@@ -1,43 +1,42 @@
 const Joi = require("joi");
 
+const id = Joi.number().integer()
+const name = Joi.string()
 const category = Joi.object().keys({
     id: Joi.number().integer(),
     name: Joi.string(),
   })
 const photoUrls = Joi.array().items(Joi.string())
-
-const findPetByStatuSchema = Joi.array().items({
-    id: Joi.number().integer(),
-    name: Joi.string().required(),
-    category: category,
-    photoUrls: photoUrls.required(),
-    tags: Joi.array().items({
+const tags = Joi.array().items({
       id: Joi.number().integer(),
       name: Joi.string(),
-    }),
-    status: Joi.string().valid("available", "pending", "sold"),
+    })
+
+const status = Joi.string().valid("available", "pending", "sold")
+
+const findPetByStatuSchema = Joi.array().items({
+    id: id,
+    name: name.required(),
+    category: category,
+    photoUrls: photoUrls.required(),
+    tags: tags,
+    status: status,
   });
 
   const newPetSchema = Joi.object().keys({
-    id: Joi.number().integer(),
-    name: Joi.string().required(),
+    id: id,
+    name: name,
     category: category,
-    photoUrls: photoUrls.required(),
-    tags: Joi.array().items({
-      id: Joi.number().integer(),
-      name: Joi.string(),
-    }),
-    status: Joi.string().valid("available", "pending", "sold"),
+    photoUrls: photoUrls,
+    tags: tags,
+    status: status,
   });
 
   const updatePetSchema = Joi.object().keys({
-    id: Joi.number().integer(),
+    id: id,
     photoUrls: photoUrls,
-    tags: Joi.array().items({
-      id: Joi.number().integer(),
-      name: Joi.string(),
-    }),
-    status: Joi.string().valid("available", "pending", "sold"),
+    tags: tags, 
+    status: status,
   });
 
 module.exports = {

@@ -3,19 +3,24 @@ const jestJoi = require("jest-joi");
 const Schemas = require("./schemas");
 
 var Chance = require("chance");
+let petId;
+let body;
 
 const baseURL = "http://localhost:8080/api/v3";
 
 describe("Find Pets by status", () => {
   expect.extend(jestJoi.matchers);
+
   it("Test /pet/findByStatus endpoint", async () => {
     const response = await request(baseURL)
       .get("/pet/findByStatus")
       .query({ status: "available" });
 
+    body = response.body;
+
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(7);
-    expect(response.body).toMatchSchema(Schemas["/pet/findByStatus"]);
+    expect(body).toHaveLength(7);
+    expect(body).toMatchSchema(Schemas["/pet/findByStatus"]);
   });
 
   it("Test /pet add a new pet to the store", async () => {
@@ -51,7 +56,7 @@ describe("Find Pets by status", () => {
   });
 
   it("Test update an existing pet", async () => {
-    const petId = 3;
+    petId = 3;
     const petStatus = "sold";
     const response = await request(baseURL)
       .put("/pet")
@@ -61,14 +66,17 @@ describe("Find Pets by status", () => {
       })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
+
+    body = response.body;
+
     expect(response.statusCode).toBe(200);
-    expect(response.body).toMatchSchema(Schemas["/pet/updatePet"]);
-    expect(response.body.id).toBe(petId);
-    expect(response.body.status).toEqual(petStatus);
+    expect(body).toMatchSchema(Schemas["/pet/updatePet"]);
+    expect(body.id).toBe(petId);
+    expect(body.status).toEqual(petStatus);
   });
 
-  it.only("Test deletes a pet", async () => {
-    const petId = 2;
+  it("Test deletes a pet", async () => {
+    petId = 2;
     const response = await request(baseURL)
       .delete(`/pet/${petId}`)
       .set("Accept", "application/xml");
