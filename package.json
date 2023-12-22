@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "chance": "^1.1.11",
-    "jest-joi": "^1.1.17",
-    "supertest": "^6.3.3",
-    "joi": "^17.11.0"
-  }
-}
